@@ -1,10 +1,10 @@
-#include "RankingInputScene.h"
-#include "../Utility/InputControl.h"
-#include "DxLib.h"
+#include"RankingInputScene.h"
+#include"../Utility/InputControl.h"
+#include"DxLib.h"
 
 RankingInputScene::RankingInputScene() : background_image(NULL),
-ranking(nullptr), score(0),
-name_num(0), cursor_x(0),
+ranking(nullptr),score(0),
+name_num(0),cursor_x(0),
 cursor_y(0)
 {
 	memset(name, NULL, (sizeof(char) * 15));
@@ -21,33 +21,35 @@ void RankingInputScene::Initialize()
 	//画像の読み込み
 	background_image = LoadGraph("Resource/images/Ranking.bmp");
 
-	//エラーチェック
-	if (background_image == -1)
-	{
-		throw("Resource/images/Ranking.bmpがありません＼n");
-	}
-
-	//メモリの動的確保
-	ranking = new RankingData;
-	ranking->Initialize();
-
-	//リザルトデータを取得する
-	FILE* fp = nullptr;
-	//ファイルオープン
-	errno_t result = fopen_s(&fp, "Resource/dat/result_data.csv", "r");
-
-	//エラーチェック
-	if (result != 0)
-	{
-		throw("Resource/dat/result_data.csvが読み込めません＼n");
-	}
-
-	//結果を読み込む
-	fscanf_s(fp, "%6d,＼n", &score);
-
-	//ファイルクローズ
-	fclose(fp);
+//エラーチェック
+if (background_image == -1)
+{
+	throw("Resource/images/Ranking.bmpがありません\n");
 }
+
+//メモリの動的確保
+ranking = new RankingData;
+ranking->Initialize();
+
+//リザルトデータを取得する
+FILE* fp = nullptr;
+
+//ファイルオープン
+errno_t result = fopen_s(&fp, "Resource/dat/result_data.csv", "r");
+
+//エラーチェック
+if (result != 0)
+{
+	throw("Resource/dat/result_data.csvが読み込めません\n");
+}
+
+//結果を読み込む
+fscanf_s(fp, "%6d,\n", &score);
+
+//ファイルクローズ
+fclose(fp);
+}
+
 
 //更新処理
 eSceneType RankingInputScene::Update()
@@ -75,7 +77,7 @@ void RankingInputScene::Draw() const
 	//背景画像の描画
 	DrawGraph(0, 0, background_image, TRUE);
 
-	//名前入力支持文字列の描画
+	//名前入力指示文字列の描画
 	DrawString(150, 100, "ランキングに登録します", 0xFFFFFF);
 	DrawFormatString(100, 220, GetColor(255, 255, 255), ">%s", name);
 
@@ -92,7 +94,7 @@ void RankingInputScene::Draw() const
 	DrawString(40, 405, "決定", GetColor(255, 255, 255));
 	DrawString(40 + font_size * 2, 405, "消す", GetColor(255, 255, 255));
 
-	//選択用文字をフォーカスする
+	//選択文字をフォーカスする
 	if (cursor_y < 4)
 	{
 		int x = cursor_x * font_size + 10;
@@ -109,7 +111,7 @@ void RankingInputScene::Draw() const
 		}
 		else
 		{
-			DrawBox(0, 0, font_size, font_size, GetColor(255, 255, 255),
+			DrawBox(80, 400, 80 + font_size * 2, 400 + font_size, GetColor(255, 255, 255),
 				FALSE);
 		}
 	}
@@ -124,7 +126,7 @@ void RankingInputScene::Finalize()
 	//読み込んだ画像を削除
 	DeleteGraph(background_image);
 
-	//動的メモリの解放
+	//動的メモリの開放
 	delete ranking;
 }
 
@@ -172,14 +174,14 @@ bool RankingInputScene::InputName()
 		if (cursor_y < 4)
 		{
 			cursor_y++;
-			if (cursor_y == 4)
+			if (cursor_y = 4)
 			{
 				cursor_x = 0;
 			}
 		}
 	}
 
-	//カーソル位置の文字を決定する
+	//カーソルの位置の文字を決定する
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
 		if (cursor_y < 2)
@@ -191,9 +193,9 @@ bool RankingInputScene::InputName()
 				cursor_y = 4;
 			}
 		}
-		else if(cursor_y < 4)
+		else if (cursor_y < 4)
 		{
-			name[name_num++] = 'A' + cursor_x+((cursor_y - 2) * 13);
+			name[name_num++] = 'A' +cursor_x+ ((cursor_y - 2) * 13);
 			if (name_num == 14)
 			{
 				cursor_x = 0;
@@ -204,7 +206,7 @@ bool RankingInputScene::InputName()
 		{
 			if (cursor_x == 0)
 			{
-				name[name_num] = '＼0';
+				name[name_num] = '\0';
 				return true;
 			}
 			else
@@ -213,5 +215,8 @@ bool RankingInputScene::InputName()
 			}
 		}
 	}
+
 	return false;
 }
+
+		

@@ -1,6 +1,6 @@
-#include "RankingData.h"
-#include <stdio.h>
-#include <string.h>
+#include"RankingData.h"
+#include<stdio.h>
+#include<string.h>
 
 RankingData::RankingData()
 {
@@ -10,9 +10,10 @@ RankingData::RankingData()
 		rank[i] = NULL;
 		for (int j = 0; j < 15; j++)
 		{
-			name[i][j] = '＼0';
+			name[i][j] = '\0';
 		}
 	}
+
 }
 
 RankingData::~RankingData()
@@ -32,13 +33,13 @@ void RankingData::Initialize()
 	//エラーチェック
 	if (result != 0)
 	{
-		throw("Resource/dat/ranking_data.csvが開けませんでした＼n");
+		throw("Resource/dat/ranking_data.csvが開けませんでした\n");
 	}
 
 	//対象ファイルから読み込む
 	for (int i = 0; i < 5; i++)
 	{
-		fscanf_s(fp, "%6d,%2d,%[^,),＼n", &score[i], &rank[i],name[i], 15);
+		fscanf_s(fp, "%6d,%2d,%[^,],\n", &score[i], &rank[i], name[i], 15);
 	}
 
 	//ファイルクローズ
@@ -47,7 +48,7 @@ void RankingData::Initialize()
 	//末尾データの設定
 	score[5] = 0;
 	rank[5] = 0;
-	name[5][0] = '＼0';
+	name[5][0] = '\0';
 }
 
 //終了処理
@@ -87,12 +88,12 @@ const char* RankingData::GetName(int value) const
 void RankingData::SortData()
 {
 	//選択法ソートを使用し、降順で入れ替える
-	for(int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		for (int j = i + 1; j < 6; j++)
 		{
-			if(score[i]<=score[j])
-				{
+			if (score[i] <= score[j])
+			{
 				int tmp = score[i];
 				score[i] = score[j];
 				score[j] = tmp;
@@ -101,7 +102,7 @@ void RankingData::SortData()
 				strcpy_s(buf, name[i]);
 				strcpy_s(name[i], name[j]);
 				strcpy_s(name[j], buf);
-				}
+			}
 		}
 	}
 
@@ -112,7 +113,7 @@ void RankingData::SortData()
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		for(int j = i + 1; j < 6; j++)
+		for (int j = i + 1; j < 6; j++)
 		{
 			if (score[i] > score[j])
 			{
@@ -120,6 +121,7 @@ void RankingData::SortData()
 			}
 		}
 	}
+
 	//ランキングデータの書き込み
 	FILE* fp = nullptr;
 
@@ -129,15 +131,16 @@ void RankingData::SortData()
 	//エラーチェック
 	if (result != 0)
 	{
-		throw("Resource/dat/ranking_data.csvが開けませんでした＼n");
+		throw("Resource/dat/ranking_data.csvが開けませんでした\n");
 	}
 
 	//対象ファイルに書き込み
 	for (int i = 0; i < 5; i++)
 	{
-		fprintf(fp, "%d,%d,s,＼n", score[i], rank[i], name[i]);
+		fprintf(fp, "%d,%d,%s,\n", score[i], rank[i], name[i]);
 	}
 
 	//ファイルクローズ
 	fclose(fp);
 }
+

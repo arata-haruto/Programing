@@ -1,6 +1,6 @@
-#include "Player.h"
-#include "../Utility/InputControl.h"
-#include "Dxlib.h"
+#include"Player.h"
+#include"../Utility/InputControl.h"
+#include"DxLib.h"
 
 Player::Player() : is_active(false), image(NULL), location(0.0f), box_size(0.0f),
 angle(0.0f),
@@ -9,7 +9,6 @@ barrier(nullptr)
 {
 
 }
-
 Player::~Player()
 {
 
@@ -20,7 +19,7 @@ void Player::Initialize()
 {
 	is_active = true;
 	location = Vector2D(320.0f, 380.0f);
-	box_size = Vector2D(31.0f, 60.0f);
+	box_size = Vector2D (31.0f, 60.0f);
 	angle = 0.0f;
 	speed = 3.0f;
 	hp = 1000;
@@ -33,14 +32,14 @@ void Player::Initialize()
 	//エラーチェック
 	if (image == -1)
 	{
-		throw("Resource/images/car1pol.bmpがありません＼n");
+		throw ("Resource/images/car1pol.bmpがありません\n");
 	}
 }
 
 //更新処理
 void Player::Update()
 {
-	//操作不可状態であれば、自身を回転させる
+	//操作不可能な状態であれば、自身を回転させる
 	if (!is_active)
 	{
 		angle += DX_PI_F / 24.0f;
@@ -51,6 +50,7 @@ void Player::Update()
 		}
 		return;
 	}
+
 	//燃料の消費
 	fuel -= speed;
 
@@ -74,6 +74,7 @@ void Player::Update()
 			barrier = new Barrier;
 		}
 	}
+
 	//バリアが生成されていたら、更新を行う
 	if (barrier != nullptr)
 	{
@@ -118,17 +119,18 @@ void Player::SetActive(bool flg)
 	this->is_active = flg;
 }
 
-//体力減少処理
+//体力現象処理
 void Player::DecreaseHp(float value)
 {
 	this->hp += value;
 }
 
 //位置情報取得処理
-Vector2D Player::GetLocation()const
+Vector2D Player::GetLocation() const
 {
 	return this->location;
 }
+
 
 //当たり判定の大きさ取得処理
 Vector2D Player::GetBoxSize()const
@@ -137,25 +139,26 @@ Vector2D Player::GetBoxSize()const
 }
 
 //速さ取得処理
-float Player::GetSpeed()const
+float Player::GetSpeed() const
 {
 	return this->speed;
 }
 
 //燃料取得処理
-float Player::GetFuel()const
+float Player::GetFuel() const
 {
 	return this->fuel;
 }
 
+
 //体力取得処理
-float Player::GetHp()const
+float Player::GetHp() const
 {
 	return this->hp;
 }
 
 //バリア枚数取得処理
-int Player::GetBarriarCount()const
+int Player::GetBarriarCount() const
 {
 	return this->barrier_count;
 }
@@ -163,7 +166,7 @@ int Player::GetBarriarCount()const
 //バリア有効か？を取得
 bool Player::IsBarrier() const
 {
-	return(barrier != nullptr);
+	return (barrier != nullptr);
 }
 
 //移動処理
@@ -191,8 +194,10 @@ void Player::Movement()
 	{
 		move += Vector2D(0.0f, 1.0f);
 	}
+
 	location += move;
-	//画面買いに行かないように制限する
+
+	//画面外に行かないように制限する
 	if ((location.x < box_size.x) || (location.x >= 640.0f - 180.0f) ||
 		(location.y < box_size.y) || (location.y >= 480.0f - box_size.y))
 	{
@@ -205,14 +210,17 @@ void Player::Acceleration()
 {
 	//LBボタンが押されたら、減速する
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_LEFT_SHOULDER) && speed >
-1.0f)
+		1.0f)
 	{
 		speed -= 1.0f;
 	}
+
 	//RBボタンが押されたら、加速する
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER) && speed <
-10.0f)
+		10.0f)
 	{
 		speed += 1.0f;
 	}
 }
+
+

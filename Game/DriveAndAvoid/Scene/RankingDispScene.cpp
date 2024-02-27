@@ -1,6 +1,6 @@
-#include "RankingDispScene.h"
-#include "../Utility/InputControl.h"
-#include "DxLib.h"
+#include"RankingDispScene.h"
+#include"../Utility/InputControl.h"
+#include"DxLib.h"
 
 RankingDispScene::RankingDispScene() : background_image(NULL), ranking(nullptr)
 {
@@ -21,7 +21,7 @@ void RankingDispScene::Initialize()
 	//エラーチェック
 	if (background_image == -1)
 	{
-		throw("Resource/images/Rankig.bmpがありません＼n");
+		throw("Resource/images/Ranking.bmpがありません\n");
 	}
 
 	//ランキング情報を取得
@@ -49,15 +49,14 @@ void RankingDispScene::Draw() const
 	//取得したランキングデータを描画する
 	for (int i = 0; i < 5; i++)
 	{
-		DrawFormatString(50, 170 + i * 25, 0xffffff, "%2d %15-s %6d",
-ranking->GetRank(i), ranking->GetName(i), ranking->GetScore(i));
+		DrawFormatString(50, 170 + i * 25, 0xffffff, "%2d %-15s %6d",
+			ranking->GetRank(i), ranking->GetName(i), ranking->GetScore(i));
 	}
 }
-
 //終了時処理
 void RankingDispScene::Finalize()
 {
-	//読み込んだ画像を削除
+	//読み込んだ画像の削除
 	DeleteGraph(background_image);
 
 	//動的メモリの開放

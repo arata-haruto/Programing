@@ -1,22 +1,22 @@
 #pragma once
 
-#include "SceneBase.h"
-#include "../Object/RankingData.h"
+#include"SceneBase.h"
+#include"../Object/RankingData.h"
 
 class RankingInputScene : public SceneBase
 {
 private:
-	int background_image;       //背景画像
-	RankingData* ranking;       //ランキング情報
-	int score;                  //スコア
-	char name[15];              //名前
-	int name_num;               //名前入力数
-	int cursor_x;               //カーソルx座標
-	int cursor_y;               //カーソルY座標
+	int background_image; //背景画像
+	RankingData* ranking; //ランキング情報
+	int score; //スコア
+	char name[15]; //名前
+	char name_num; //名前入力数
+	int cursor_x; //カーソルx座標
+	int cursor_y; //カーソルｙ座標
 
 public:
 	RankingInputScene();
-	virtual ~RankingInputScene();
+	virtual~RankingInputScene();
 
 	virtual void Initialize() override;
 	virtual eSceneType Update() override;
@@ -29,4 +29,3 @@ private:
 	//名前入力処理
 	bool InputName();
 };
-

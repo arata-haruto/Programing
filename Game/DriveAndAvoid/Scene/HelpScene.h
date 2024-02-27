@@ -1,15 +1,15 @@
 #pragma once
 
-#include "SceneBase.h"
+#include"SceneBase.h"
 
 class HelpScene : public SceneBase
 {
 private:
-	int background_image;    //”wŒi‰æ‘œ
+	int background_image;//”wŒi‰æ‘œ
 
 public:
 	HelpScene();
-	virtual ~HelpScene();
+	virtual~HelpScene();
 
 	virtual void Initialize() override;
 	virtual eSceneType Update() override;
@@ -18,4 +18,3 @@ public:
 
 	virtual eSceneType GetNowScene() const override;
 };
-

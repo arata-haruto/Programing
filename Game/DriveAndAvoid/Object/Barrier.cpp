@@ -1,7 +1,7 @@
-#include "Barrier.h"
-#include "DxLib.h"
+#include"Barrier.h"
+#include"DxLib.h"
 
-Barrier::Barrier() : image(NULL), life_span(1000)
+Barrier::Barrier():image(NULL), life_span(1000)
 {
 	//画像の読み込み
 	image = LoadGraph("Resource/images/barrier.png");
@@ -9,11 +9,11 @@ Barrier::Barrier() : image(NULL), life_span(1000)
 	//エラーチェック
 	if (image == -1)
 	{
-		throw ("Resource/images/barrier.pngがありません＼n");
+		throw("Resource/images/barrier.pngがありません\n");
 	}
 }
 
-Barrier::~Barrier()
+Barrier::~Barrier() 
 {
 	//読み込んだ画像を削除
 	DeleteGraph(image);
